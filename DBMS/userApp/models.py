@@ -1,7 +1,7 @@
-from django import models
-from django.conf import Settings
+from django.db import models
 from django.contrib.auth.models import AbstractUser
-user=Settings.AUTH_USER_MODEL
 
-class user(AbstractUser):
+class management(AbstractUser):
  phone_number=models.IntegerField()
+
+ 

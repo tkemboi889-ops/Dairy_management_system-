@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-8cnl_=5p_!kbx_!$4hq5s)z8$3slugrg4n-0!z%d--#u!vf(8o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-AUTH_USER_MODEL='userapp.user'
+AUTH_USER_MODEL='userApp.Management'
 ALLOWED_HOSTS = []
 
 
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'edairy',
     'userApp',
     'rest_framework.authtoken',
@@ -79,8 +80,8 @@ WSGI_APPLICATION = 'DBMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DBMS',
-        'USER': 'mydbms',
+        'NAME': 'edb',
+        'USER': 'EUser',
         'PASSWORD': '3750',
         'HOST': 'localhost',   # Or your server IP
         'PORT': '3306',
