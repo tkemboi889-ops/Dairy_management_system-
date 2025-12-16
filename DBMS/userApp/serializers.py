@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from django.contrib.auth import authenticate
-from .models import management  # use proper class name (usually User)
+from .models import Management  # use proper class name (usually User)
 
 
 # User Serializer
 # =========================
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model =management 
+        model =Management 
         fields = "__all__"
 
 
@@ -18,11 +18,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = management
+        model = Management
         fields = ('username', 'password', 'phone_number')
 
     def create(self, validated_data):
-        user = management.objects.create_user(
+        user = Management.objects.create_user(
             username=validated_data['username'],
             password=validated_data['password'],
             phone_number=validated_data['phone_number']
