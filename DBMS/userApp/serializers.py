@@ -4,7 +4,7 @@ from .models import Management  # use proper class name (usually User)
 
 
 # User Serializer
-# =========================
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model =Management 
@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 # Registration Serializer
-# =========================
+
 class RegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
