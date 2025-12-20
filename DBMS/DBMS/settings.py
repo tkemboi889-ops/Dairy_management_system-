@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'edb',
-        'USER': 'EUser',
+        'USER': 'EUSER',
         'PASSWORD': '3750',
         'HOST': 'localhost',   # Or your server IP
         'PORT': '3306',
