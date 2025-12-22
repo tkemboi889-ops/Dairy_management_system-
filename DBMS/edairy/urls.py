@@ -12,5 +12,5 @@ router.register(r'milk', MilkViewSet, basename='milk')
 router.register(r'owners', OwnerViewSet, basename='owner')
 
 urlpatterns=[
-    path('',include('router.urls')),
+    path('',include(router.urls)),
 ]

@@ -22,14 +22,14 @@ class RegisterAPIView(generics.CreateAPIView):
 
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
-
+    
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        user = serializer.validated_data
+        user = serializer.validated_data['user']
 
-        token = Token.objects.get_or_create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
 
         return Response({
             "token": token.key,

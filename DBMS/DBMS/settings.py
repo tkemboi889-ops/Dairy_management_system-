@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-8cnl_=5p_!kbx_!$4hq5s)z8$3slugrg4n-0!z%d--#u!vf(8o
 DEBUG = True
 
 AUTH_USER_MODEL='userApp.Management'
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+}
 
 
 # Application definition

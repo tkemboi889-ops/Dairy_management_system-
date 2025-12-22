@@ -59,7 +59,7 @@ class Feed(models.Model):
 # 6. Worker Profile
 class Worker(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
     # A worker can be assigned to multiple cows
     cows = models.ManyToManyField(Cow, blank=True, related_name='workers')
 
