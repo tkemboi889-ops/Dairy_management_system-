@@ -142,19 +142,27 @@ WSGI_APPLICATION = 'DBMS.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
+        # Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE'),
-        'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
-        'HOST': os.environ.get('MYSQL_HOST'),
-        'PORT': os.environ.get('MYSQL_PORT', '3306'),
+        'NAME': os.environ.get('MYSQL_DATABASE', 'edb'),        
+        'USER': os.environ.get('MYSQL_USER', 'EUSER'),           
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD', '3750'),   
+        'HOST': os.environ.get('MYSQL_HOST', 'localhost'),      
+        'PORT': os.environ.get('MYSQL_PORT', '3306'),           
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
-    }
+        'CONN_MAX_AGE': 60,  # keeps connections alive for 60s (production optimization)
+    },
 }
+
+   
+
 
 
 
