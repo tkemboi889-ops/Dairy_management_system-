@@ -12,50 +12,82 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-#Redirects all non-HTTPS traffic to HTTPS (Crucial for production)
-SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() == 'true' 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https') # Required if using a reverse proxy (Nginx, Heroku, etc.)
-# Browser security settings
+
+
+# --------------------------------------------------
+# SECURITY
+# --------------------------------------------------
+
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "unsafe-local-dev-key"
+)
+
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS",
+    ".onrender.com localhost 127.0.0.1"
+).split()
+
+
+
+# --------------------------------------------------
+# HTTPS & PROXY (RENDER REQUIRED)
+# --------------------------------------------------
+
+# Render handles HTTPS at the proxy level
+SECURE_SSL_REDIRECT = os.environ.get(
+    "SECURE_SSL_REDIRECT", "True"
+).lower() == "true"
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+# --------------------------------------------------
+# SECURITY HEADERS
+# --------------------------------------------------
+
 SECURE_BROWSER_XSS_FILTER = True
-X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
-# --- STATIC FILES CONFIGURATION ---
+X_FRAME_OPTIONS = "DENY"
+
+
+# --------------------------------------------------
+# CSRF (RENDER REQUIRED)
+# --------------------------------------------------
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+]
+
+
+# --------------------------------------------------
+# AWS S3 (OPTIONAL – ONLY IF YOU USE S3)
+# --------------------------------------------------
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles' # Location for collectstatic output
- #If using AWS S3 for storage
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_SDEFAULT_ACL = 'public-read' # Ensure files are publicly readable
-# Static files storage
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files storage
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3MediaStorage'
-MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8cnl_=5p_!kbx_!$4hq5s)z8$3slugrg4n-0!z%d--#u!vf(8o'
+# --------------------------------------------------
+# AUTH & DRF
+# --------------------------------------------------
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+AUTH_USER_MODEL = "userApp.Management"
 
-AUTH_USER_MODEL='userApp.Management'
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
     ],
 }
+
+
 
 
 # Application definition
@@ -74,7 +106,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,6 +116,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'DBMS.urls'
 
@@ -109,13 +145,18 @@ WSGI_APPLICATION = 'DBMS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'edb',
-        'USER': 'EUSER',
-        'PASSWORD': '3750',
-        'HOST': 'localhost',   # Or your server IP
-        'PORT': '3306',
+        'NAME': os.environ.get('MYSQL_DATABASE'),
+        'USER': os.environ.get('MYSQL_USER'),
+        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
+        'HOST': os.environ.get('MYSQL_HOST'),
+        'PORT': os.environ.get('MYSQL_PORT', '3306'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
+
+
 
 
 # Password validation
@@ -152,7 +193,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
