@@ -12,13 +12,11 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 import os
 
-ALLOWED_HOSTS = os.environ.get(
-    "ALLOWED_HOSTS",
-    "127.0.0.1,localhost,dairy-management-system-q1z3.onrender.com"
-).split(",")
 
-# Strip any spaces
-ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS]
+ALLOWED_HOSTS = [
+    "dairy-management-system-q1z3.onrender.com",
+    ".onrender.com",
+]
 
 
 AUTH_USER_MODEL = "UserApp.Management"
