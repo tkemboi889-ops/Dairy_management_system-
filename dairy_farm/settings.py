@@ -12,7 +12,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
-    "127.0.0.1,localhost,dairy-management-system-q1z3.onrender.com,"
+    "127.0.0.1,localhost"
 ).split(",")
 
 
@@ -22,13 +22,18 @@ AUTH_USER_MODEL = "UserApp.Management"
 # HTTPS / COOKIES
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = True
+
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+else:
+    SECURE_SSL_REDIRECT = False
 
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://*.onrender.com",
+    "https://dairy-management-system-q1z3.onrender.com",
 ]
 
 
