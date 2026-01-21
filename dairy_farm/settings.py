@@ -12,8 +12,9 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
-    ".onrender.com"
+    "127.0.0.1,localhost,dairy-api.onrender.com"
 ).split(",")
+
 
 AUTH_USER_MODEL = "UserApp.Management"
 
