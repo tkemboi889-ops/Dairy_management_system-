@@ -12,7 +12,7 @@ DEBUG = os.environ.get("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = os.environ.get(
     "ALLOWED_HOSTS",
-    "127.0.0.1,localhost,dairy-api.onrender.com"
+    "127.0.0.1,localhost,dairy-management-system-q1z3.onrender.com,"
 ).split(",")
 
 
