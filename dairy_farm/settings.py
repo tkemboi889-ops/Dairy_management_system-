@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 
-SECRET_KEY = os.environ.get("secret_key")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
 DEBUG =os.environ.get("Django_Debug","False")=="True"
@@ -114,7 +114,7 @@ DATABASES = {
         "USER": os.environ.get("MYSQL_USER"),
         "PASSWORD": os.environ.get("MYSQL_PASSWORD"),
         "HOST": os.environ.get("MYSQL_HOST"),
-        "PORT": os.environ.get("MYSQL_PORT"),
+        "PORT": os.environ.get("MYSQL_PORT",3306),
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
         },
