@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 
-DEBUG =os.environ.get("Django_Debug","False")=="True"
+DEBUG =os.environ.get("DJANGO_DEBUG","False")=="True"
 
 import os
 
