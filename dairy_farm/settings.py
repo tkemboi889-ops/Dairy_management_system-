@@ -15,8 +15,7 @@ import os
 
 
 ALLOWED_HOSTS = [
-    "dairy-management-system-q1z3.onrender.com",
-    ".onrender.com",
+    "dairy-management-system-q1z3.onrender.com"
 ]
 
 
