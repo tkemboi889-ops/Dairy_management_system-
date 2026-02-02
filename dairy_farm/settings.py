@@ -1,4 +1,6 @@
 from pathlib import Path
+from decouple import config
+import dj_database_url
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -6,12 +8,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY")
 
 
-DEBUG =os.environ.get("DJANGO_DEBUG","False")=="True"
+DEBUG =config("DEBUG",default=False,cast=bool)
 
-import os
+
 
 
 ALLOWED_HOSTS = [
@@ -104,21 +106,19 @@ TEMPLATES = [
 ]
 
 
-# DATABASE (MySQL)
+# DATABASE (postgresql)
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("MYSQL_DATABASE"),
-        "USER": os.environ.get("MYSQL_USER"),
-        "PASSWORD": os.environ.get("MYSQL_PASSWORD"),
-        "HOST": os.environ.get("MYSQL_HOST"),
-        "PORT": os.environ.get("MYSQL_PORT",3306),
-        "OPTIONS": {
-            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
+
+    "default": dj_database_url.config(
+        default=f"postgresql://{config('DB_USER')}:{config('DB_PASSWORD')}@{config('DB_HOST')}:{config('DB_PORT')}/{config('DB_NAME')}",
+        conn_max_age=600,
+        ssl_require=False
+    )
 }
+
+        
+
 
 
 # PASSWORD VALIDATION
