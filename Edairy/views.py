@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 
 # Create your views here.
 
@@ -6,6 +6,15 @@ from rest_framework import  viewsets
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from .serializers import CalfSerializer,WorkerSerializer,FeedSerializer,CowSerializer,MilkSerializer,OwnerSerializer
 from .models import Calf,Cow,Milk,Feed,Owner,Worker
+#creating a homepage function
+from django.http import JsonResponse
+def home(request):
+    return JsonResponse({
+        "message": "Dairy Management System API is running successfully ",
+        "status": "OK"
+    })
+
+
 # Create your views here.
 class CalfViewSet(viewsets.ModelViewSet):
     queryset=Calf.objects.all()
