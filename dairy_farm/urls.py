@@ -16,9 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from Edairy.views import Edairy
+from Edairy.views import home
 urlpatterns = [
-    path('',Edairy),
+    path('',home),
     path('admin/', admin.site.urls),
     path('api/',include("Edairy.urls")),
     path('api/',include("UserApp.urls")),
