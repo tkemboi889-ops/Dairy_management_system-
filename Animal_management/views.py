@@ -96,9 +96,9 @@ def register_calf_birth_view(request, cow_id):
     )
 
 
-# ==========================================
+
 # ASSIGN WORKER TO COW
-# ==========================================
+
 
 def assign_worker_to_cow_view(request, cow_id):
 
@@ -152,9 +152,7 @@ def assign_worker_to_cow_view(request, cow_id):
     )
 
 
-# ==========================================
 # SELL COW
-# ==========================================
 
 @require_POST
 def sell_cow_view(request, cow_id):
@@ -183,9 +181,7 @@ def sell_cow_view(request, cow_id):
     return redirect("cow_list")
 
 
-# ==========================================
 # MARK COW AS DEAD
-# ==========================================
 
 @require_POST
 def mark_cow_dead_view(request, cow_id):

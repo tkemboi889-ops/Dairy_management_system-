@@ -115,7 +115,7 @@ class Calf(models.Model):
         max_length=1
     )
 
-    date_of_birth = models.DateField(null=type,blank=True)
+    date_of_birth = models.DateField(null=True,blank=True)
 
     status = models.CharField(
         max_length=20,

@@ -116,11 +116,11 @@ TEMPLATES = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "",
-        "USER": "",
-        "PASSWORD": "",
-        "HOST": "",
-        "PORT": "",
+        "NAME": "dairy_management",
+        "USER": "dairy_user",
+        "PASSWORD": "37507965",
+        "HOST": "localhost",
+        "PORT": "5432",
     }
 }
 

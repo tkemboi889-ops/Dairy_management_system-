@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth import get_user_model
 
 from Animal_management.models import Cow
-from Edairy.models import farm_manager
+from Edairy.models import farm_manager,Calf
 from Animal_management.services.animal_service import (
     mark_cow_pregnant,
     register_calf_birth,
@@ -89,7 +89,7 @@ class RegisterCalfBirthServiceTest(TestCase):
             sex="M",
             date_of_birth=date.today()
         )
-        self.assertIsInstance(calf)
+        self.assertIsInstance(calf,Calf)
         self.assertEqual(calf.name, "Junior")
         self.assertEqual(calf.cow, self.mother)
 
