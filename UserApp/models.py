@@ -1,8 +1,3 @@
-from django.db import models
-
-# Create your models here.
-from django.db import models
-from django.contrib.auth.models import AbstractUser,BaseUserManager
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
@@ -11,7 +6,7 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 class ManagementManager(BaseUserManager):
     def create_user(self, username, password=None, phone_number=None, **extra_fields):
         if not username:
-            raise ValueError("The username must be set")
+            raise ValueError("Username is required.")
 
         user = self.model(
             username=username,
@@ -27,14 +22,31 @@ class ManagementManager(BaseUserManager):
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
 
-        return self.create_user(username, password, **extra_fields)
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("Superuser must have is_staff=True.")
+
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError("Superuser must have is_superuser=True.")
+
+        return self.create_user(
+            username=username,
+            password=password,
+            **extra_fields
+        )
 
 
 class Management(AbstractUser):
-    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    phone_number = models.CharField(
+        max_length=15,
+        unique=True,
+        null=True,
+        blank=True
+    )
 
     objects = ManagementManager()
 
+    def __str__(self):
+        return self.username
 
 
  

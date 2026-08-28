@@ -11,13 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 
-DEBUG =config("DEBUG",default=False,cast=bool)
+DEBUG =True
 
 
 
 
 ALLOWED_HOSTS = [
-    "dairy-management-system-q1z3.onrender.com"
+    "127.0.0.1","localhost"
 ]
 
 
@@ -34,8 +34,12 @@ if not DEBUG:
 else:
     SECURE_SSL_REDIRECT = False
 
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+if DEBUG:
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+else:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 CSRF_TRUSTED_ORIGINS = [
     "https://dairy-management-system-q1z3.onrender.com",
@@ -60,6 +64,7 @@ INSTALLED_APPS = [
     # Local apps
     "Edairy",
     "UserApp",
+    "Animal_management"
 ]
 
 
@@ -93,7 +98,7 @@ WSGI_APPLICATION = "dairy_farm.wsgi.application"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -109,14 +114,17 @@ TEMPLATES = [
 # DATABASE (postgresql)
 
 DATABASES = {
-    "default": dj_database_url.config(
-        default=config("DATABASE_URL"),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "",
+        "USER": "",
+        "PASSWORD": "",
+        "HOST": "",
+        "PORT": "",
+    }
 }
 
-    
+Email_Backend='django.core.mail.backends.console.EmailBackend'   
 
 
         
@@ -149,8 +157,22 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = (
     "whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+LOGIN_URL = "login"
 
+LOGIN_REDIRECT_URL = "dashboard"
+
+LOGOUT_REDIRECT_URL = "login"
+SIGN_UP_REDIRECT_URL="login"
+MEDIA_URL = "/media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # DEFAULT PK
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# Email configuration - development
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+DEFAULT_FROM_EMAIL = "noreply@dairymanagement.com"

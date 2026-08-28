@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Cow Details
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-md-10">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <h2>
+
+                Cow Details
+
+            </h2>
+
+
+            <a
+                href="{% url 'cow_list' %}"
+                class="btn btn-secondary"
+            >
+
+                Back to Cow List
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- COW INFORMATION -->
+
+        <div class="card shadow-sm mb-4">
+
+
+            <div class="card-header bg-success text-white">
+
+                Animal Information
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+                    <div class="col-md-4">
+
+                        <p>
+
+                            <strong>Name:</strong>
+
+                            {{ cow.name }}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-4">
+
+                        <p>
+
+                            <strong>Breed:</strong>
+
+                            {{ cow.breed }}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-4">
+
+                        <p>
+
+                            <strong>Sex:</strong>
+
+                            {{ cow.sex }}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-4">
+
+                        <p>
+
+                            <strong>Status:</strong>
+
+                            {{ cow.status }}
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ANIMAL MANAGEMENT ACTIONS -->
+
+        <div class="card shadow-sm">
+
+
+            <div class="card-header">
+
+                Animal Management Actions
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <!-- MARK AS PREGNANT -->
+
+                {% if cow.status == "ACTIVE" and cow.sex == "F" %}
+
+
+                    <form
+                        method="POST"
+                        action="{% url 'mark_cow_pregnant' cow.id %}"
+                        class="d-inline"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-warning mb-2"
+                        >
+
+                            Mark as Pregnant
+
+                        </button>
+
+
+                    </form>
+
+
+                {% endif %}
+
+
+
+                <!-- REGISTER CALF BIRTH -->
+
+                {% if cow.status == "PREGNANT" %}
+
+
+                    <a
+                        href="{% url 'register_calf_birth' cow.id %}"
+                        class="btn btn-success mb-2"
+                    >
+
+                        Register Calf Birth
+
+                    </a>
+
+
+                {% endif %}
+
+
+
+                <!-- ASSIGN WORKER -->
+
+                {% if cow.status != "DEAD" and cow.status != "SOLD" %}
+
+
+                    <a
+                        href="{% url 'assign_worker_to_cow' cow.id %}"
+                        class="btn btn-primary mb-2"
+                    >
+
+                        Assign Worker
+
+                    </a>
+
+
+                {% endif %}
+
+
+
+                <!-- SELL COW -->
+
+                {% if cow.status != "DEAD" and cow.status != "SOLD" %}
+
+
+                    <form
+                        method="POST"
+                        action="{% url 'sell_cow' cow.id %}"
+                        class="d-inline"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger mb-2"
+                            onclick="return confirm('Are you sure you want to sell this cow?')"
+                        >
+
+                            Sell Cow
+
+                        </button>
+
+
+                    </form>
+
+
+                {% endif %}
+
+
+
+                <!-- MARK COW AS DEAD -->
+
+                {% if cow.status != "DEAD" and cow.status != "SOLD" %}
+
+
+                    <form
+                        method="POST"
+                        action="{% url 'mark_cow_dead' cow.id %}"
+                        class="d-inline"
+                    >
+
+                        {% csrf_token %}
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-dark mb-2"
+                            onclick="return confirm('Are you sure you want to mark this cow as dead?')"
+                        >
+
+                            Mark as Dead
+
+                        </button>
+
+
+                    </form>
+
+
+                {% endif %}
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

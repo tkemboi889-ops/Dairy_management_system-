@@ -1,42 +1,150 @@
 from django.db import models
 
 # Create your models here.
-from django.db import models
+
 from django.conf import settings # Import settings
 
-# 1. Owner Profile
-class Owner(models.Model):
-    # Link to the centralized User model
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=15, null=True, blank=True)
+from django.db import models
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from datetime import date
+
+# farm_manager model
+class farm_manager(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+
+    phone_number = models.CharField(
+        max_length=15,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.user.username
 
-# 2. Cow Model
+# cow model
 class Cow(models.Model):
-    SEX_CHOICES = [("M", "Male"), ("F", "Female")]
-    
+
+    SEX_CHOICES = [
+        ("M", "Male"),
+        ("F", "Female"),
+    ]
+
+    STATUS_CHOICES = [
+        ("ACTIVE", "Active"),
+        ("PREGNANT", "Pregnant"),
+        ("SICK", "Sick"),
+        ("DRY", "Dry"),
+        ("SOLD", "Sold"),
+        ("DEAD", "Dead"),
+    ]
+
     name = models.CharField(max_length=50)
+
     breed = models.CharField(max_length=20)
-    sex = models.CharField(choices=SEX_CHOICES, max_length=1)
-    age = models.IntegerField()
-    # Link Cow to Owner
-    owner = models.ForeignKey(Owner, on_delete=models.CASCADE, related_name='cows')
+
+    sex = models.CharField(
+        choices=SEX_CHOICES,
+        max_length=1
+    )
+
+    date_of_birth = models.DateField(null=True,blank=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="ACTIVE"
+    )
+
+    farm_manager = models.ForeignKey(
+        farm_manager,
+        on_delete=models.CASCADE,
+        related_name="cows"
+    )
+    def clean(self):
+
+     if self.status == "PREGNANT" and self.sex != "F":
+        raise ValidationError(
+            "Only female cows can be pregnant."
+        )
+    def get_age(self):
+        today = date.today()
+
+        age = today.year - self.date_of_birth.year
+
+        if (
+            today.month,
+            today.day
+        ) < (
+            self.date_of_birth.month,
+            self.date_of_birth.day
+        ):
+            age -= 1
+
+        return age
 
     def __str__(self):
         return self.name
 
+    
+
 # 3. Calf Model
 class Calf(models.Model):
-    SEX_CHOICES = [("M", "Male"), ("F", "Female")]
-    
+
+    SEX_CHOICES = [
+        ("M", "Male"),
+        ("F", "Female"),
+    ]
+
+    STATUS_CHOICES = [
+        ("ACTIVE", "Active"),
+        ("SICK", "Sick"),
+        ("SOLD", "Sold"),
+        ("DEAD", "Dead"),
+    ]
+
     name = models.CharField(max_length=20)
+
     breed = models.CharField(max_length=20)
-    sex = models.CharField(choices=SEX_CHOICES, max_length=1)
-    age = models.IntegerField()
-    # Link Calf to Mother Cow
-    cow = models.ForeignKey(Cow, on_delete=models.CASCADE, related_name='calves')
+
+    sex = models.CharField(
+        choices=SEX_CHOICES,
+        max_length=1
+    )
+
+    date_of_birth = models.DateField(null=type,blank=True)
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="ACTIVE"
+    )
+
+    cow = models.ForeignKey(
+        Cow,
+        on_delete=models.CASCADE,
+        related_name="calves"
+    )
+
+    def get_age(self):
+
+        today = date.today()
+
+        age = today.year - self.date_of_birth.year
+
+        if (
+            today.month,
+            today.day
+        ) < (
+            self.date_of_birth.month,
+            self.date_of_birth.day
+        ):
+            age -= 1
+
+        return age
 
     def __str__(self):
         return self.name

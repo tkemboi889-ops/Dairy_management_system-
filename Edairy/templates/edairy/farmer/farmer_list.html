@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2>Farmers</h2>
+
+        <a href="{% url 'add_farmer' %}"
+           class="btn btn-primary">
+            Add Farmer
+        </a>
+
+    </div>
+
+    {% if object_list %}
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Username</th>
+                <th>Phone Number</th>
+                <th>Number of Cows</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for farmer in object_list %}
+
+            <tr>
+
+                <td>{{ farmer.user.username }}</td>
+
+                <td>{{ farmer.phone_number }}</td>
+
+                <td>{{ farmer.cows.count }}</td>
+
+                <td>
+
+                    <a href="{% url 'farmers_detail' farmer.pk %}"
+                       class="btn btn-info btn-sm">
+                        View
+                    </a>
+
+                    <a href="{% url 'farmers_update' farmer.pk %}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'delete_farmer' farmer.pk %}"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        No farmers have been registered.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

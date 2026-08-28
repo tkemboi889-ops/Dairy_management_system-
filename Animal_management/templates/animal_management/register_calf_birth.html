@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Register Calf Birth
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="mb-4">
+
+            <h2>
+                Register Calf Birth
+            </h2>
+
+            <p class="text-muted">
+
+                Register a new calf born from the selected mother.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- MOTHER INFORMATION -->
+
+        <div class="card mb-4 shadow-sm">
+
+            <div class="card-header bg-success text-white">
+
+                Mother Information
+
+            </div>
+
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Name:</strong>
+
+                            {{ mother.name }}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Breed:</strong>
+
+                            {{ mother.breed }}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Sex:</strong>
+
+                            {{ mother.sex }}
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Status:</strong>
+
+                            {{ mother.status }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- CALF FORM -->
+
+        <div class="card shadow-sm">
+
+            <div class="card-header">
+
+                Calf Information
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+
+                    <!-- NAME -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="name"
+                            class="form-label"
+                        >
+
+                            Calf Name
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="name"
+                            name="name"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- BREED -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="breed"
+                            class="form-label"
+                        >
+
+                            Breed
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="breed"
+                            name="breed"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- SEX -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="sex"
+                            class="form-label"
+                        >
+
+                            Sex
+
+                        </label>
+
+
+                        <select
+                            class="form-select"
+                            id="sex"
+                            name="sex"
+                            required
+                        >
+
+                            <option value="">
+
+                                Select Sex
+
+                            </option>
+
+
+                            <option value="M">
+
+                                Male
+
+                            </option>
+
+
+                            <option value="F">
+
+                                Female
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+
+                    <!-- DATE OF BIRTH -->
+
+                    <div class="mb-3">
+
+                        <label
+                            for="date_of_birth"
+                            class="form-label"
+                        >
+
+                            Date of Birth
+
+                        </label>
+
+
+                        <input
+                            type="date"
+                            class="form-control"
+                            id="date_of_birth"
+                            name="date_of_birth"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="mt-4">
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success"
+                        >
+
+                            Register Birth
+
+                        </button>
+
+
+                        <a
+                            href="{% url 'cow_list' %}"
+                            class="btn btn-secondary"
+                        >
+
+                            Cancel
+
+                        </a>
+
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

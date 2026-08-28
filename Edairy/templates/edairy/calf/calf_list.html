@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Calves</h2>
+
+        <a href="{% url 'add_calf' %}"
+           class="btn btn-primary">
+            Add Calf
+        </a>
+    </div>
+
+    {% if object_list %}
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-striped">
+
+            <thead class="table-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Breed</th>
+                    <th>Sex</th>
+                    <th>Age</th>
+                    <th>Mother Cow</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for calf in object_list %}
+
+                <tr>
+
+                    <td>{{ calf.name }}</td>
+
+                    <td>{{ calf.breed }}</td>
+
+                    <td>{{ calf.get_sex_display }}</td>
+
+                    <td>{{ calf.age }}</td>
+
+                    <td>{{ calf.cow.name }}</td>
+
+                    <td>
+
+                        <a href="{% url 'calf_details' calf.pk %}"
+                           class="btn btn-info btn-sm">
+                            View
+                        </a>
+
+                        <a href="{% url 'update_calfs' calf.pk %}"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a href="{% url 'delete_calf' calf.pk %}"
+                           class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        No calves have been registered yet.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

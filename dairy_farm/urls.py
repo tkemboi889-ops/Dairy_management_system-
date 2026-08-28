@@ -16,11 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from Edairy.views import home
+from Edairy.Api_views import home
+from django.conf import settings
+from django.conf.urls.static import static
 urlpatterns = [
     path('',home),
     path('admin/', admin.site.urls),
     path('api/',include("Edairy.urls")),
     path('api/',include("UserApp.urls")),
-
+    path('Animals/', include("Animal_management.urls"))
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

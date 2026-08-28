@@ -1,4 +1,4 @@
-from .models import Owner,Worker,Cow,Calf,Milk,Feed
+from .models import farm_manager,Worker,Cow,Calf,Milk,Feed
 from rest_framework import serializers
 from datetime import date
 #creating serializers for models
@@ -6,7 +6,7 @@ from datetime import date
 
 class OwnerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Owner
+        model = farm_manager
         fields = '__all__'
 
     def validate(self, attrs):
@@ -15,7 +15,7 @@ class OwnerSerializer(serializers.ModelSerializer):
 
         # Email uniqueness check 
         if email:
-            queryset = Owner.objects.filter(email=email)
+            queryset = farm_manager.objects.filter(email=email)
 
             # Exclude current instance during update
             if self.instance:

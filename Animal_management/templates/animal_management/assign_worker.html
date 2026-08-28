@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+
+Assign Worker
+
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-md-8">
+
+
+        <h2 class="mb-4">
+
+            Assign Worker to Cow
+
+        </h2>
+
+
+
+        <!-- COW INFORMATION -->
+
+        <div class="card mb-4 shadow-sm">
+
+
+            <div class="card-header bg-primary text-white">
+
+                Cow Information
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="row">
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Name:</strong>
+
+                            {{ cow.name }}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Breed:</strong>
+
+                            {{ cow.breed }}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Sex:</strong>
+
+                            {{ cow.sex }}
+
+                        </p>
+
+                    </div>
+
+
+
+                    <div class="col-md-6">
+
+                        <p>
+
+                            <strong>Status:</strong>
+
+                            {{ cow.status }}
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ASSIGNMENT FORM -->
+
+        <div class="card shadow-sm">
+
+
+            <div class="card-header">
+
+                Select Worker
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="mb-3">
+
+
+                        <label
+                            for="worker"
+                            class="form-label"
+                        >
+
+                            Worker
+
+                        </label>
+
+
+                        <select
+                            class="form-select"
+                            id="worker"
+                            name="worker"
+                            required
+                        >
+
+
+                            <option value="">
+
+                                Select Worker
+
+                            </option>
+
+
+                            {% for worker in workers %}
+
+
+                                <option
+                                    value="{{ worker.id }}"
+                                >
+
+                                    {{ worker }}
+
+                                </option>
+
+
+                            {% endfor %}
+
+
+                        </select>
+
+
+                    </div>
+
+
+
+                    <div class="mt-4">
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-primary"
+                        >
+
+                            Assign Worker
+
+                        </button>
+
+
+                        <a
+                            href="{% url 'cow_list' %}"
+                            class="btn btn-secondary"
+                        >
+
+                            Cancel
+
+                        </a>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock %}

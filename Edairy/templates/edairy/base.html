@@ -1,0 +1,434 @@
+```html
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}
+            Dairy Management System
+        {% endblock %}
+    </title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    {% block extra_css %}
+    {% endblock %}
+
+</head>
+
+<body class="bg-light">
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <!-- Website Brand -->
+
+        <a class="navbar-brand fw-bold"
+           href="{% url 'dashboard' %}">
+            Dairy Management
+        </a>
+
+
+        <!-- Mobile Menu Button -->
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <!-- Navigation Links -->
+
+        <div class="collapse navbar-collapse"
+             id="mainNavbar">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <!-- Dashboard -->
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       href="{% url 'dashboard' %}">
+                        Dashboard
+                    </a>
+
+                </li>
+
+
+                <!-- Cows -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        Cows
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'cows_list' %}">
+                                All Cows
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'add_cow' %}">
+                                Add Cow
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Calves -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        Calves
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'calfs_list' %}">
+                                All Calves
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'add_calf' %}">
+                                Add Calf
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Milk -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        Milk
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'milk_list' %}">
+                                Milk Records
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'add_milk' %}">
+                                Add Milk
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Feed -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        Feed
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'feeds_list' %}">
+                                All Feeds
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'add_feeds' %}">
+                                Add Feed
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Farmers -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        Farmers
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'farmers_list' %}">
+                                All Farmers
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'add_farmer' %}">
+                                Add Farmer
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+
+                <!-- Workers -->
+
+                <li class="nav-item dropdown">
+
+                    <a class="nav-link dropdown-toggle"
+                       href="#"
+                       role="button"
+                       data-bs-toggle="dropdown">
+
+                        Workers
+
+                    </a>
+
+                    <ul class="dropdown-menu">
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'workers_list' %}">
+                                All Workers
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item"
+                               href="{% url 'add_workers' %}">
+                                Add Worker
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
+            </ul>
+
+
+            <!-- Authentication Section -->
+
+            <ul class="navbar-nav">
+
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+
+                        <span class="nav-link text-light">
+                            Welcome, {{ user.username }}
+                        </span>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <form method="post"
+                              action="{% url 'logout' %}"
+                              class="d-inline">
+
+                            {% csrf_token %}
+
+                            <button type="submit"
+                                    class="btn btn-outline-light btn-sm mt-1">
+                                Logout
+                            </button>
+
+                        </form>
+
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+
+                        <a class="nav-link"
+                           href="{% url 'login' %}">
+                            Login
+                        </a>
+
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= DJANGO MESSAGES ================= -->
+
+<div class="container mt-3">
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div
+                class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                role="alert">
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+</div>
+
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<main class="container py-4">
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="bg-dark text-light mt-5">
+
+    <div class="container py-4">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <h5>Dairy Management System</h5>
+
+                <p class="text-secondary mb-0">
+                    Manage cows, calves, milk production,
+                    feeds, farmers and workers efficiently.
+                </p>
+
+            </div>
+
+
+            <div class="col-md-6 text-md-end">
+
+                <p class="mb-1">
+                    Dairy Management System
+                </p>
+
+                <small class="text-secondary">
+                    &copy; {% now "Y" %} All Rights Reserved.
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JavaScript -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+
+</html>
+```

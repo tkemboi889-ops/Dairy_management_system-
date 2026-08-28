@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Milk Record Details</h2>
+
+    <div class="card mt-3">
+
+        <div class="card-body">
+
+            <p>
+                <strong>Cow:</strong>
+                {{ object.cow.name }}
+            </p>
+
+            <p>
+                <strong>Amount:</strong>
+                {{ object.amount_in_litres }} litres
+            </p>
+
+            <p>
+                <strong>Date Collected:</strong>
+                {{ object.date_collected }}
+            </p>
+
+            <a href="{% url 'update_milk' object.pk %}"
+               class="btn btn-warning">
+                Edit
+            </a>
+
+            <a href="{% url 'delete_milk' object.pk %}"
+               class="btn btn-danger">
+                Delete
+            </a>
+
+            <a href="{% url 'milk_list' %}"
+               class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

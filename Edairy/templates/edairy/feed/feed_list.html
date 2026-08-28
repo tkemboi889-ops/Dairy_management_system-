@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2>Feeds</h2>
+
+        <a href="{% url 'add_feeds' %}"
+           class="btn btn-primary">
+            Add Feed
+        </a>
+
+    </div>
+
+    {% if object_list %}
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Name</th>
+                <th>Store Number</th>
+                <th>Cow</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for feed in object_list %}
+
+            <tr>
+
+                <td>{{ feed.name }}</td>
+                <td>{{ feed.store_number }}</td>
+                <td>{{ feed.cow.name }}</td>
+
+                <td>
+
+                    <a href="{% url 'feed_details' feed.pk %}"
+                       class="btn btn-info btn-sm">
+                        View
+                    </a>
+
+                    <a href="{% url 'feeds_update' feed.pk %}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'delete_feeds' feed.pk %}"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        No feeds have been registered.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

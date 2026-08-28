@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-4">
+
+        <h2>Milk Records</h2>
+
+        <a href="{% url 'add_milk' %}"
+           class="btn btn-primary">
+            Add Milk Record
+        </a>
+
+    </div>
+
+    {% if object_list %}
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>Cow</th>
+                <th>Amount (Litres)</th>
+                <th>Date Collected</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for milk in object_list %}
+
+            <tr>
+
+                <td>{{ milk.cow.name }}</td>
+
+                <td>{{ milk.amount_in_litres }} L</td>
+
+                <td>{{ milk.date_collected }}</td>
+
+                <td>
+
+                    <a href="{% url 'milk_details' milk.pk %}"
+                       class="btn btn-info btn-sm">
+                        View
+                    </a>
+
+                    <a href="{% url 'update_milk' milk.pk %}"
+                       class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'delete_milk' milk.pk %}"
+                       class="btn btn-danger btn-sm">
+                        Delete
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <div class="alert alert-info">
+        No milk records have been registered.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

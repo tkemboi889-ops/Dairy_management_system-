@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Feed Details</h2>
+
+    <div class="card mt-3">
+
+        <div class="card-body">
+
+            <p>
+                <strong>Name:</strong>
+                {{ object.name }}
+            </p>
+
+            <p>
+                <strong>Store Number:</strong>
+                {{ object.store_number }}
+            </p>
+
+            <p>
+                <strong>Cow:</strong>
+                {{ object.cow.name }}
+            </p>
+
+            <a href="{% url 'feeds_update' object.pk %}"
+               class="btn btn-warning">
+                Edit
+            </a>
+
+            <a href="{% url 'delete_feeds' object.pk %}"
+               class="btn btn-danger">
+                Delete
+            </a>
+
+            <a href="{% url 'feeds_list' %}"
+               class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
