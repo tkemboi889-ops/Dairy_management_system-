@@ -1,7 +1,7 @@
 from pathlib import Path
 from decouple import config
 import dj_database_url
-
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -138,14 +138,15 @@ TEMPLATES = [
 
 # DATABASE (postgresql)
 
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "MY_DATABASE",
-        "USER": "MY_USER",
-        "PASSWORD": "MY_PASSWORD",
-        "HOST": "MY_HOST",
-        "PORT": "PORT",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME', 'your_local_db'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),  # Defaults to localhost if not set
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
