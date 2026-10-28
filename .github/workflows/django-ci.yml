@@ -1,0 +1,55 @@
+name: Django API Continuous Integration
+
+on:
+  push:
+    branches: [ main, master, development ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  run-backend-tests:
+    runs-on: ubuntu-latest
+
+    # Spin up an automated PostgreSQL database instance for testing
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: my_database
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: securetestpassword123
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    # 1. Download project repository code into the runner container
+    - name: Checkout Code Repository
+      uses: actions/checkout@v4
+
+    # 2. Configure Python 3.13 environment
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        cache: 'pip' # Automatically caches installed packages for speed
+
+    # 3. Upgrade Pip and install project packages
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    # 4. Wipe runtime bytecode artifacts and trigger your successful test targets
+    - name: Run Test Pipeline
+      env:
+        # Pass environment variables matching your custom database profiles if needed
+        DATABASE_URL: postgres://postgres:securetestpassword123@localhost:5432/dairy_management
+      run: |
+        find . -name "*.pyc" -delete
+        python manage.py test Edairy.tests.test_viewsets
+        python manage.py test Animal_management.tests.test_api_views
