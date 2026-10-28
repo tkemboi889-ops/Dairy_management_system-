@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-
+from drf_spectacular.utils import extend_schema
 # Registration apiView
 class RegisterAPIView(generics.CreateAPIView):
     queryset = Management.objects.all()
@@ -24,6 +24,10 @@ class RegisterAPIView(generics.CreateAPIView):
 
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
+    @extend_schema(
+        request=LoginSerializer,
+        responses={200: LoginSerializer})
+    
     
     def post(self, request):
         serializer = LoginSerializer(data=request.data)

@@ -4,7 +4,7 @@
 
 from rest_framework import  viewsets
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
-from .serializers import CalfSerializer,WorkerSerializer,FeedSerializer,CowSerializer,MilkSerializer,OwnerSerializer
+from .serializers import CalfSerializer,WorkerSerializer,FeedSerializer,CowSerializer,MilkSerializer,farm_managerSerializer
 from .models import Calf,Cow,Milk,Feed,farm_manager,Worker
 #creating a homepage function
 from django.http import JsonResponse
@@ -41,7 +41,7 @@ class MilkViewSet(viewsets.ModelViewSet):
     serializer_class=MilkSerializer
     permission_classes=[IsAuthenticated]
 
-class OwnerViewSet(viewsets.ModelViewSet):
+class farm_managerViewSet(viewsets.ModelViewSet):
     queryset=farm_manager.objects.all()
-    serializer_class=OwnerSerializer
+    serializer_class=farm_managerSerializer
     permission_classes=[IsAdminUser]

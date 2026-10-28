@@ -14,9 +14,9 @@ from .services.animal_service import (
 )
 
 
-# ==========================================
+
 # MARK COW AS PREGNANT
-# ==========================================
+
 
 @require_POST
 def mark_cow_pregnant_view(request, cow_id):
@@ -42,9 +42,8 @@ def mark_cow_pregnant_view(request, cow_id):
     return redirect("cow_list")
 
 
-# ==========================================
+
 # REGISTER CALF BIRTH
-# ==========================================
 
 def register_calf_birth_view(request, cow_id):
 

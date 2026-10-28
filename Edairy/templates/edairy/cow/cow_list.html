@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "edairy/cow/base.html" %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
 
         <h2>Cows</h2>
 
-        <a href="{% url 'add_cow' %}"
+        <a href="{% url 'Edairy:cow_list' %}"
            class="btn btn-primary">
             Add Cow
         </a>
@@ -52,17 +52,17 @@
 
                     <td>
 
-                        <a href="{% url 'cow_details' cow.pk %}"
+                        <a href="{% url 'Edairy:cow_details' cow.pk %}"
                            class="btn btn-info btn-sm">
                             View
                         </a>
 
-                        <a href="{% url 'update_cows' cow.pk %}"
+                        <a href="{% url 'Edairy:update_cows' cow.pk %}"
                            class="btn btn-warning btn-sm">
                             Edit
                         </a>
 
-                        <a href="{% url 'delete_cow' cow.pk %}"
+                        <a href="{% url 'Edairy:delete_cow' cow.pk %}"
                            class="btn btn-danger btn-sm">
                             Delete
                         </a>

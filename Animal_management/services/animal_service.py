@@ -1,12 +1,12 @@
 from django.core.exceptions import ValidationError
 from django.db import transaction
 
-from Edairy.models import Cow, Calf, Worker
+from Edairy.models import  Calf
 
 
-# ==========================================
+
 # MARK COW AS PREGNANT
-# ==========================================
+
 
 @transaction.atomic
 def mark_cow_pregnant(cow):
@@ -41,9 +41,9 @@ def mark_cow_pregnant(cow):
     return cow
 
 
-# ==========================================
+
 # REGISTER CALF BIRTH
-# ==========================================
+
 
 @transaction.atomic
 def register_calf_birth(
@@ -89,7 +89,7 @@ def register_calf_birth(
     return calf
 
 
-# ==========================================
+
 # ASSIGN WORKER TO COW
 
 
@@ -115,9 +115,8 @@ def assign_worker_to_cow(worker, cow):
     return worker
 
 
-# ==========================================
 # SELL COW
-# ==========================================
+
 
 @transaction.atomic
 def sell_cow(cow):
@@ -142,9 +141,8 @@ def sell_cow(cow):
     return cow
 
 
-# ==========================================
+
 # MARK COW AS DEAD
-# ==========================================
 
 @transaction.atomic
 def mark_cow_dead(cow):

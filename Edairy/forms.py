@@ -3,7 +3,7 @@ from .models import Calf,Cow,Milk,Feed,Worker,farm_manager
 class calform(forms.ModelForm):
     class Meta:
         model=Calf
-        fields=["name","breed"]
+        fields=["name","breed","cow"]
 
 class cowform(forms.ModelForm):
     class Meta:

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "edairy/farmer/base.html" %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
 
         <h2>Farmers</h2>
 
-        <a href="{% url 'add_farmer' %}"
+        <a href="{% url 'Edairy:add_farmer' %}"
            class="btn btn-primary">
             Add Farmer
         </a>
@@ -44,17 +44,17 @@
 
                 <td>
 
-                    <a href="{% url 'farmers_detail' farmer.pk %}"
+                    <a href="{% url 'Edairy:farmers_detail' farmer.pk %}"
                        class="btn btn-info btn-sm">
                         View
                     </a>
 
-                    <a href="{% url 'farmers_update' farmer.pk %}"
+                    <a href="{% url 'Edairy:farmers_update' farmer.pk %}"
                        class="btn btn-warning btn-sm">
                         Edit
                     </a>
 
-                    <a href="{% url 'delete_farmer' farmer.pk %}"
+                    <a href="{% url 'Edairy:delete_farmer' farmer.pk %}"
                        class="btn btn-danger btn-sm">
                         Delete
                     </a>

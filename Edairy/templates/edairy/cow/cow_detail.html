@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "edairy/cow/base.html" %}
 
 {% block content %}
 
@@ -39,17 +39,17 @@
                 {{ object.owner }}
             </p>
 
-            <a href="{% url 'update_cows' object.pk %}"
+            <a href="{% url 'Edairy:update_cows' object.pk %}"
                class="btn btn-warning">
                 Edit
             </a>
 
-            <a href="{% url 'delete_cow' object.pk %}"
+            <a href="{% url 'Edairy:delete_cow' object.pk %}"
                class="btn btn-danger">
                 Delete
             </a>
 
-            <a href="{% url 'cows_list' %}"
+            <a href="{% url 'Edairy:cow_list' %}"
                class="btn btn-secondary">
                 Back
             </a>

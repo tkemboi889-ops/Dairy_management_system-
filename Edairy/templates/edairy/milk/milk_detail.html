@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "edairy/milk/base.html" %}
 
 {% block content %}
 
@@ -25,17 +25,17 @@
                 {{ object.date_collected }}
             </p>
 
-            <a href="{% url 'update_milk' object.pk %}"
+            <a href="{% url 'Edairy:update_milk' object.pk %}"
                class="btn btn-warning">
                 Edit
             </a>
 
-            <a href="{% url 'delete_milk' object.pk %}"
+            <a href="{% url 'Edairy:delete_milk' object.pk %}"
                class="btn btn-danger">
                 Delete
             </a>
 
-            <a href="{% url 'milk_list' %}"
+            <a href="{% url 'Edairy:milk_list' %}"
                class="btn btn-secondary">
                 Back
             </a>

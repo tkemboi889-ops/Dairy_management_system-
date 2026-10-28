@@ -101,7 +101,7 @@ class EdairyModelsTest(TestCase):
         )
         self.assertEqual(str(calf), "Daisy")
         self.assertEqual(calf.cow, self.female_cow)
-        self.assertIn(calf, self.female_cow.calves.all())  # Check related_name="calves"
+        self.assertIn(calf, self.female_cow.calves.all())  
 
         # Calculate expected age dynamically
         today = date.today()

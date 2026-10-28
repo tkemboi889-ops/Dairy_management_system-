@@ -19,12 +19,22 @@ from django.urls import path,include
 from Edairy.Api_views import home
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView,SpectacularRedocView,SpectacularSwaggerView
 urlpatterns = [
     path('',home),
     path('admin/', admin.site.urls),
-    path('api/',include("Edairy.urls")),
-    path('api/',include("UserApp.urls")),
-    path('Animals/', include("Animal_management.urls"))
+    path('api1/',include("Edairy.urls")),
+    path('api2/',include("UserApp.urls")),
+    path('api3/', include("Animal_management.urls")),
+    # --- DRF SPECTACULAR DOCUMENTATION URLS ---
+    # Downloads the raw schema YAML/JSON file
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    
+    # Interactive Swagger Web Interface
+    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    
+    # Alternative Clean Redoc Web Interface
+    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

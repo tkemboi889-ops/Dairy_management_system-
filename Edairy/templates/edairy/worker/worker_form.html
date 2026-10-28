@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "edairy/worker/base.html" %}
 
 {% block content %}
 
@@ -16,7 +16,7 @@
             Save Worker
         </button>
 
-        <a href="{% url 'workers_list' %}"
+        <a href="{% url 'Edairy:workers_list' %}"
            class="btn btn-secondary">
             Cancel
         </a>

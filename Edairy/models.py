@@ -62,7 +62,9 @@ class Cow(models.Model):
     farm_manager = models.ForeignKey(
         farm_manager,
         on_delete=models.CASCADE,
-        related_name="cows"
+        related_name="cows",
+        null=True,
+        blank=True
     )
     def clean(self):
 

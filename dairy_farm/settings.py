@@ -11,6 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 
+
 DEBUG =True
 
 
@@ -27,7 +28,10 @@ AUTH_USER_MODEL = "UserApp.Management"
 # HTTPS / COOKIES
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
+SECURE_SSL_REDIRECT=True
+SECURE_HSTS_SECONDS=31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS=True
+SECURE_SSL_HOSTS=True
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -41,9 +45,6 @@ else:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://dairy-management-system-q1z3.onrender.com",
-]
 
 
 # APPLICATIONS
@@ -60,12 +61,36 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    "drf_spectacular",
+    "drf_spectacular_sidecar",
+    
 
     # Local apps
     "Edairy",
     "UserApp",
     "Animal_management"
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  
+    
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Dairy Management System API',
+    'DESCRIPTION': 'Comprehensive API endpoints for tracking cows, calves, milk logs, and farm workers.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # Utilizing sidecars for offline-ready browser UI layouts
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+    "schema_path_prefix":r"/api",
+}
+
 
 
 # MIDDLEWARE
@@ -116,11 +141,11 @@ TEMPLATES = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dairy_management",
-        "USER": "dairy_user",
-        "PASSWORD": "37507965",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": "MY_DATABASE",
+        "USER": "MY_USER",
+        "PASSWORD": "MY_PASSWORD",
+        "HOST": "MY_HOST",
+        "PORT": "PORT",
     }
 }
 
