@@ -15,8 +15,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          SECRET_KEY:"django-insecure-automated-testing-dummy-key-value-12345"
-          POSTGRES_DB: my_database
+          POSTGRES_DB: dairy_management
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: securetestpassword123
         ports:
@@ -37,7 +36,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.13'
-        cache: 'pip' # Automatically caches installed packages for speed
+        cache: 'pip'
 
     # 3. Upgrade Pip and install project packages
     - name: Install Dependencies
@@ -48,8 +47,16 @@ jobs:
     # 4. Wipe runtime bytecode artifacts and trigger your successful test targets
     - name: Run Test Pipeline
       env:
-        # Pass environment variables matching your custom database profiles if needed
+        # 💡 PLACED SECURELY HERE: Decouple reads this right as Python starts testing!
+        SECRET_KEY: "django-insecure-automated-testing-dummy-key-value-12345"
+        
+        # Database routing variables
         DATABASE_URL: postgres://postgres:securetestpassword123@localhost:5432/dairy_management
+        DB_NAME: dairy_management
+        DB_USER: postgres
+        DB_PASSWORD: securetestpassword123
+        DB_HOST: localhost
+        DB_PORT: 5432
       run: |
         find . -name "*.pyc" -delete
         python manage.py test Edairy.tests.test_viewsets
