@@ -15,6 +15,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
+          SECRET_KEY:"django-insecure-automated-testing-dummy-key-value-12345"
           POSTGRES_DB: my_database
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: securetestpassword123
