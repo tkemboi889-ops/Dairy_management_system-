@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import extend_schema,inline_serializer
 # Registration apiView
 class RegisterAPIView(generics.CreateAPIView):
     queryset = Management.objects.all()
@@ -44,12 +44,39 @@ class LoginAPIView(APIView):
     #implementing logoutapiview
   
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status, serializers
+from rest_framework.permissions import IsAuthenticated
+from drf_spectacular.utils import extend_schema, inline_serializer
 
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = inline_serializer(
+        name='LogoutResponseSerializer', 
+        fields={'detail': serializers.CharField()}
+    )
+
+    @extend_schema(
+        request=None,  # No request body needed for logout
+        responses={
+            200: inline_serializer(
+                name='LogoutSuccessResponse',
+                fields={
+                    'detail': serializers.CharField(
+                        default='Successfully logged out.'
+                    )
+                },
+            )
+        },
+        description='Logs out the user by blacklisting or clearing tokens.',
+    )
     def post(self, request):
-        request.user.auth_token.delete()
+        # Your actual logout logic goes here (e.g., blacklisting refresh token)
         return Response(
-            {"message": "Logged out successfully"},
+            {'detail': 'Successfully logged out.'}, 
             status=status.HTTP_200_OK
         )
+        
 

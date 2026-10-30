@@ -96,6 +96,7 @@ class CowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cow
         fields = '__all__'
+        ref_name="EdairyCow"
 def validate_age(self,value):
     if value <=0:
      raise serializers.ValidationError({

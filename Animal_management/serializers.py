@@ -7,12 +7,14 @@ class CowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cow
         fields = "__all__"
+        ref_name="AnimalManagementCow"
 
 
 class CalfSerializer(serializers.ModelSerializer):
     class Meta:
         model = Calf
         fields = "__all__"
+        ref_name="AnimalManagementCalf"
 
 
 class RegisterCalfBirthSerializer(serializers.Serializer):
