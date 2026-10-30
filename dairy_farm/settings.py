@@ -1,6 +1,6 @@
 from pathlib import Path
 from decouple import config, Csv
-import os
+import os,sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +22,7 @@ AUTH_USER_MODEL = "UserApp.Management"
 
 # HTTPS / COOKIES
 # Only enforce strict HTTPS security in production (when DEBUG is False)
-if not DEBUG:
+if not DEBUG and "test" not in sys.argv :
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 31536000
